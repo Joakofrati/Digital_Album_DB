@@ -41,3 +41,19 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+
+# =========================
+# Archivos del Proyecto DBZ
+# =========================
+
+# Ignorar tus backups personales de progreso (para no subir tus checks a GitHub)
+mi_progreso_dbz*.json
+*progreso*.json
+
+# Si metiste el script de Python en la misma carpeta del proyecto, ignorá esto:
+__pycache__/
+venv/
+env/
+.env
+*.pyc

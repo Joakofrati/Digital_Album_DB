@@ -1,0 +1,70 @@
+<div class="album-contenedor">
+  
+  <header class="album-header">
+    <div class="header-info">
+      <h1>Dragon Ball Z - Cromeros S.A.</h1>
+      <p class="stats">
+        Completado: <strong>{{ totalObtenidas }}</strong> / {{ cartas.length }} 
+        ({{ (totalObtenidas / cartas.length * 100).toFixed(1) }}%)
+      </p>
+      <p class="stats" style="margin-top: 5px;">
+        Cartas para cambio (Repetidas): <strong>{{ totalRepetidas }}</strong>
+      </p>
+      
+      <!-- Botones para manejar el JSON físico -->
+      <div style="margin-top: 10px;">
+        <button (click)="exportarProgreso()" style="margin-right: 10px; cursor: pointer;">💾 Exportar JSON</button>
+        
+        <!-- El input de tipo file lo ocultamos y lo disparamos con un label para que quede lindo -->
+        <label style="cursor: pointer; background: #eee; padding: 2px 6px; border: 1px solid #ccc; color: black; font-size: 13.3px;">
+          📂 Importar JSON
+          <input type="file" accept=".json" (change)="importarProgreso($event)" style="display: none;">
+        </label>
+      </div>
+    </div>
+
+    <div class="filtros">
+      <button 
+        [class.activo]="filtroActual === 'todas'" 
+        (click)="setFiltro('todas')">Todas
+      </button>
+      <button 
+        [class.activo]="filtroActual === 'tengo'" 
+        (click)="setFiltro('tengo')">Obtenidas
+      </button>
+      <button 
+        [class.activo]="filtroActual === 'faltan'" 
+        (click)="setFiltro('faltan')">Faltantes
+      </button>
+    </div>
+  </header>
+
+  <main class="album-grid">
+    <div 
+      class="carta-card" 
+      *ngFor="let carta of cartasFiltradas" 
+      [class.obtenida]="carta.cantidad > 0"
+      (click)="toggleCarta(carta)"
+    >
+      
+      <div class="imagen-wrapper">
+        <img [src]="'/cartas/' + carta.expansion + '/' + carta.archivo" [alt]="carta.nombre">
+      </div>
+
+      <div class="carta-footer">
+        <span class="carta-numero">#{{ carta.id }}</span>
+        
+        <!-- EL NUEVO CONTADOR -->
+        <div class="contador-container" (click)="$event.stopPropagation()">
+          <button class="btn-contador" (click)="restarCopia(carta, $event)" [disabled]="carta.cantidad === 0">-</button>
+          <span class="cantidad-badge" [class.multiple]="carta.cantidad > 1">
+            {{ carta.cantidad }}
+          </span>
+          <button class="btn-contador" (click)="sumarCopia(carta, $event)">+</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+</div>

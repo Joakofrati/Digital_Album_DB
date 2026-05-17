@@ -1,0 +1,177 @@
+/* VARIABLES Y RESET BÁSICO */
+.album-contenedor {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #121212;
+  color: #ffffff;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+/* HEADER Y FILTROS */
+.album-header {
+  background-color: #1e1e1e;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  border-bottom: 3px solid #f39c12;
+}
+
+.header-info h1 {
+  margin: 0 0 5px 0;
+  font-size: 24px;
+  color: #f39c12;
+}
+
+.stats {
+  margin: 0;
+  font-size: 14px;
+  color: #aaaaaa;
+}
+
+.filtros button {
+  background: #2a2a2a;
+  border: 1px solid #444;
+  color: #fff;
+  padding: 8px 16px;
+  margin-left: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filtros button:hover {
+  background: #333;
+}
+
+.filtros button.activo {
+  background: #f39c12;
+  color: #000;
+  border-color: #f39c12;
+  font-weight: bold;
+}
+
+/* GRILLA Y TARJETAS */
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 30px 40px;
+}
+
+.carta-card {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.carta-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(243, 156, 18, 0.2);
+}
+
+/* EFECTO BLANCO Y NEGRO PARA FALTANTES */
+.carta-card:not(.obtenida) .imagen-wrapper img {
+  filter: grayscale(100%) brightness(0.6);
+}
+
+/* CONTENEDOR DE IMAGEN Y MÁSCARA */
+.imagen-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.imagen-wrapper img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* PARCHE PARA TAPAR EL NÚMERO ORIGINAL */
+.mascara-codigo {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  width: 45px;
+  height: 25px;
+  background-color: #ffd700; /* Color amarillo típico de la franja */
+  border-radius: 2px;
+  z-index: 10;
+}
+
+/* FOOTER DE LA CARTA (Número e Input) */
+.carta-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding: 0 5px;
+}
+
+.carta-numero {
+  font-size: 18px;
+  font-weight: bold;
+  color: #aaaaaa;
+}
+
+.carta-card.obtenida .carta-numero {
+  color: #f39c12;
+}
+
+/* ELIMINÁ LO DEL CHECKBOX E INSERTÁ ESTO PARA EL CONTADOR */
+
+.contador-container {
+  display: flex;
+  align-items: center;
+  background-color: #2a2a2a;
+  border-radius: 20px;
+  padding: 2px;
+  border: 1px solid #444;
+}
+
+.btn-contador {
+  background: transparent;
+  color: #fff;
+  border: none;
+  width: 26px;
+  height: 26px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.btn-contador:hover:not(:disabled) {
+  background-color: #444;
+}
+
+.btn-contador:disabled {
+  color: #555;
+  cursor: default;
+}
+
+.cantidad-badge {
+  min-width: 20px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0 4px;
+}
+
+/* Efecto especial: si tenés más de 1, el número se pone dorado para resaltar que tenés repetidas */
+.cantidad-badge.multiple {
+  color: #f39c12; 
+}
