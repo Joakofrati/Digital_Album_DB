@@ -6,7 +6,8 @@ export interface Carta {
   nombre: string;
   archivo: string;
   expansion: string;
-  cantidad: number; // ¡Cambiamos 'tengo' por 'cantidad'!
+  cantidad: number; 
+  cantidadPrevia?: number; // ¡NUEVO: La memoria de la carta!
 }
 
 type TipoFiltro = 'todas' | 'tengo' | 'faltan';
@@ -75,10 +76,16 @@ export class AlbumComponent implements OnInit {
 
   // Si hace click en la carta entera, actúa como un interruptor rápido (0 o 1)
   toggleCarta(carta: Carta): void {
-    carta.cantidad = carta.cantidad === 0 ? 1 : 0;
+    if (carta.cantidad > 0) {
+      // Se desmarca: Guardamos la cantidad actual en la memoria antes de ponerla en 0
+      carta.cantidadPrevia = carta.cantidad;
+      carta.cantidad = 0;
+    } else {
+      // Se marca: Si tiene una memoria guardada mayor a 0, la recuperamos. Si no, le ponemos 1.
+      carta.cantidad = (carta.cantidadPrevia && carta.cantidadPrevia > 0) ? carta.cantidadPrevia : 1;
+    }
     this.guardarProgreso();
   }
-
   // Nuevas funciones para los botones del contador
   sumarCopia(carta: Carta, event: Event): void {
     event.stopPropagation(); // Evita que se dispare el click de toda la carta
@@ -155,6 +162,25 @@ export class AlbumComponent implements OnInit {
   setFiltro(filtro: string): void {
     // ...y acá lo forzamos a convertirse en nuestro TipoFiltro
     this.filtroActual = filtro as TipoFiltro;
+  }
+
+  cambiarCantidad(carta: Carta, event: Event): void {
+    const input = event.target as HTMLInputElement;
+    let nuevaCantidad = parseInt(input.value, 10);
+
+    // Validamos que no metan letras o números negativos
+    if (isNaN(nuevaCantidad) || nuevaCantidad < 0) {
+      nuevaCantidad = 0;
+    }
+
+    carta.cantidad = nuevaCantidad;
+    
+    // Si la cantidad es mayor a 0, también actualizamos su memoria
+    if (nuevaCantidad > 0) {
+      carta.cantidadPrevia = nuevaCantidad;
+    }
+
+    this.guardarProgreso();
   }
 
 }

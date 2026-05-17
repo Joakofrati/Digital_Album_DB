@@ -48,7 +48,7 @@
     >
       
       <div class="imagen-wrapper">
-        <img [src]="'/cartas/' + carta.expansion + '/' + carta.archivo" [alt]="carta.nombre">
+        <img [src]="'cartas/' + carta.expansion + '/' + carta.archivo" [alt]="carta.nombre">
       </div>
 
       <div class="carta-footer">
@@ -57,9 +57,17 @@
         <!-- EL NUEVO CONTADOR -->
         <div class="contador-container" (click)="$event.stopPropagation()">
           <button class="btn-contador" (click)="restarCopia(carta, $event)" [disabled]="carta.cantidad === 0">-</button>
-          <span class="cantidad-badge" [class.multiple]="carta.cantidad > 1">
-            {{ carta.cantidad }}
-          </span>
+          
+          <input 
+            type="number" 
+            class="cantidad-input" 
+            [class.multiple]="carta.cantidad > 1"
+            [value]="carta.cantidad"
+            (change)="cambiarCantidad(carta, $event)"
+            (click)="$event.stopPropagation()"
+            min="0"
+          >
+
           <button class="btn-contador" (click)="sumarCopia(carta, $event)">+</button>
         </div>
       </div>

@@ -163,12 +163,30 @@
   cursor: default;
 }
 
-.cantidad-badge {
-  min-width: 20px;
+.cantidad-input {
+  width: 35px;
   text-align: center;
   font-size: 14px;
   font-weight: bold;
   margin: 0 4px;
+  background: transparent;
+  border: none;
+  color: white;
+  outline: none; /* Saca el borde azul cuando haces click */
+}
+
+.cantidad-input.multiple {
+  color: #f39c12; 
+}
+
+/* Magia negra de CSS para ocultar las flechitas (spinners) por defecto del navegador */
+.cantidad-input::-webkit-outer-spin-button,
+.cantidad-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.cantidad-input[type=number] {
+  -moz-appearance: textfield; /* Para Firefox */
 }
 
 /* Efecto especial: si tenés más de 1, el número se pone dorado para resaltar que tenés repetidas */
